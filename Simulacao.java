@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Simulacao {
     private Caixa[] caixa;
     private List<Cliente> clientes;
+    private Cliente cliente;
     private List<Parede> paredes;
     private JanelaSimulacao janelaSimulacao;
     private Mapa mapa;
@@ -29,7 +30,7 @@ public class Simulacao {
             mapa.adicionarItem(parede);
         }
 
-        Cliente cliente = new Cliente(new Localizacao(0,altura-1), 1);//Cria um cliente
+        cliente = new Cliente(new Localizacao(0,altura-1), 1);//Cria um cliente
         cliente.setLocalizacaoDestino(mapa.getEntrada(TipoAtendimento.Comum));
         mapa.adicionarItem(cliente);
 
@@ -45,7 +46,9 @@ public class Simulacao {
     }
 
     private void executarUmPasso() {
-
+        mapa.removerItem(cliente);
+        cliente.executarAcao();
+        mapa.adicionarItem(cliente);
         janelaSimulacao.executarAcao();
     }
     
