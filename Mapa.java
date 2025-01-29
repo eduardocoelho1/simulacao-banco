@@ -135,27 +135,35 @@ public class Mapa {
     }
 
     public Localizacao getMelhorCaixa(TipoAtendimento tipo) {
+        List<Localizacao> caixas;
         switch (tipo) {
             case TipoAtendimento.Comum:
-                for (int y = caixasComuns.get(0).getY()+1; y < 30; y++) {
-                    for (Localizacao caixa: caixasComuns) {
-                        if (getItem(caixa.getX(), y) == null) {
-                            return caixa;
-                        }
-                    }
-                }
-                return caixasComuns.get(0);
+                caixas = caixasComuns;
+                break;
             case TipoAtendimento.Preferencial:
-                for (int y = caixasPreferenciais.get(0).getY()+1; y < 30; y++) {
-                    for (Localizacao caixa: caixasPreferenciais) {
-                        if (getItem(caixa.getX(), y) == null) {
-                            return caixa;
-                        }
-                    }
-                }
-                return caixasPreferenciais.get(0);
+                caixas = caixasPreferenciais;
+                break;
             default:
                 return null;
         }
+        
+        Localizacao melhorCaixa = caixas.get(0);
+        int tamMenorFila = 1000;
+
+        for (Localizacao caixa: caixas) {
+            int y = caixa.getY()+1;
+            int tamFila = 0;
+            while (!(getItem(caixa.getX(), y) instanceof Parede)) {
+                if (getItem(caixa.getX(), y) != null) {
+                    tamFila++;
+                }
+                y++;
+            }
+            if (tamFila < tamMenorFila) {
+                tamMenorFila = tamFila;
+                melhorCaixa = caixa;
+            }
+        }
+        return melhorCaixa;
     }
 }

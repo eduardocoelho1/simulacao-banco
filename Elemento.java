@@ -15,7 +15,7 @@ public abstract class Elemento {
         return localizacaoAtual;
     }
 
-    protected void setLocalizacaoAtual(Localizacao localizacaoAtual) {
+    public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
         this.localizacaoAtual = localizacaoAtual;
     }
     
