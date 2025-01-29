@@ -1,6 +1,6 @@
 public class ClientePreferencial extends Cliente {
-    ClientePreferencial(Localizacao localizacao, int velAtend, Simulacao simulacao) {
-        super(localizacao, velAtend, simulacao, "clientepreferencial");
+    ClientePreferencial(Localizacao localizacao, int tempoAtendMin, int tempoAtendMax, Simulacao simulacao) {
+        super(localizacao, tempoAtendMin, tempoAtendMax, simulacao, "clientepreferencial");
     }
 
     @Override

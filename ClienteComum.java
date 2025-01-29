@@ -1,6 +1,6 @@
 public class ClienteComum extends Cliente {
-    ClienteComum(Localizacao localizacao, int velAtend, Simulacao simulacao) {
-        super(localizacao, velAtend, simulacao, "clientecomum");
+    ClienteComum(Localizacao localizacao, int tempoAtendMin, int tempoAtendMax, Simulacao simulacao) {
+        super(localizacao, tempoAtendMin, tempoAtendMax, simulacao, "clientecomum");
     }
 
     @Override
