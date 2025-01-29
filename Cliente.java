@@ -5,11 +5,12 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
 public abstract class Cliente extends Elemento {
-    private enum Estado {
+    public enum Estado {
         fora,
         dentro,
         atendendo,
-        atendido
+        atendido,
+        saindo
     }
 
     private Localizacao localizacaoDestino;
@@ -66,6 +67,7 @@ public abstract class Cliente extends Elemento {
                 break;
             case Estado.atendido:
                 localizacaoDestino = verSaida();
+                atualizarEstado();
             default:
                 break;
         }
@@ -98,6 +100,10 @@ public abstract class Cliente extends Elemento {
                     estado = Estado.atendido;
                 }
                 break;
+            case Estado.atendido:
+                if (getLocalizacaoAtual() == localizacaoDestino) {
+                    estado = Estado.saindo;
+                }
             default:
                 break;
         }
@@ -105,6 +111,10 @@ public abstract class Cliente extends Elemento {
 
     public Simulacao getSimulacao() {
         return simulacao;
+    }
+
+    public Estado getEstado() {
+        return estado;
     }
 
     public abstract Caixa verCaixa();

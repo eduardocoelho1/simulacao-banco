@@ -1,6 +1,7 @@
 import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Responsavel pela simulacao.
@@ -47,10 +48,16 @@ public class Simulacao {
     }
 
     private void executarUmPasso() {
-        for (Cliente cliente : clientes) {
+        Iterator<Cliente> it = clientes.iterator();
+        while (it.hasNext()) {
+            Cliente cliente = it.next();
             mapa.removerItem(cliente);
             cliente.executarAcao();
-            mapa.adicionarItem(cliente);
+            if (cliente.getEstado() != Cliente.Estado.saindo) {
+                mapa.adicionarItem(cliente);
+            } else {
+                it.remove();
+            }
         }
         Random rand = new Random();
         int valor = rand.nextInt(100);
