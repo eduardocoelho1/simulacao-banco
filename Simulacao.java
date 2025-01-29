@@ -30,7 +30,7 @@ public class Simulacao {
             mapa.adicionarItem(parede);
         }
 
-        cliente = new ClientePreferencial(new Localizacao(0,altura-1), 1, this);//Cria um cliente
+        cliente = new ClienteComum(new Localizacao(0,altura-1), 1, this);//Cria um cliente
         cliente.setLocalizacaoDestino(cliente.getLocalizacaoAtual());
         mapa.adicionarItem(cliente);
 

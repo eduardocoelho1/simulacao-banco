@@ -6,17 +6,20 @@ public abstract class Cliente extends Elemento {
     private enum Estado {
         fora,
         dentro,
+        atendendo,
         atendido
     }
 
     private Localizacao localizacaoDestino;
     private Estado estado;
-    private int velAtend;
+    private int tempoAtend;
+    private int tempoGasto = 0;
     private Simulacao simulacao;
 
-    public Cliente(Localizacao localizacao, int velAtend, Simulacao simulacao, String imagem) {
+    public Cliente(Localizacao localizacao, int tempoAtend, Simulacao simulacao, String imagem) {
         super(localizacao, imagem);
-        this.velAtend = velAtend;
+        this.tempoAtend = tempoAtend;
+        this.tempoGasto = 0;
         estado = Estado.fora;
         this.simulacao = simulacao;
     }
@@ -53,8 +56,7 @@ public abstract class Cliente extends Elemento {
                 trocarEstado();
                 break;
             case Estado.atendido:
-                localizacao = verSaida();
-                localizacaoDestino = localizacao;
+            
                 break;
             default:
                 break;
@@ -79,7 +81,11 @@ public abstract class Cliente extends Elemento {
                 estado = Estado.dentro;
                 break;
             case Estado.dentro:
+                estado = Estado.atendendo;
+                break;
+            case Estado.atendendo:
                 estado = Estado.atendido;
+                break;
             default:
                 break;
         }
