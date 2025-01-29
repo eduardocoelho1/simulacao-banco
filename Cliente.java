@@ -76,10 +76,12 @@ public abstract class Cliente extends Elemento {
         Localizacao destino = getLocalizacaoDestino();
         if(destino != null){
             if (localizacaoDestino.equals(getLocalizacaoAtual())) {
-                proximoDestino();
+                proximoDestino();                    
             }
+            Mapa mapa = simulacao.getMapa();
             Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(localizacaoDestino);
-            setLocalizacaoAtual(proximaLocalizacao);
+            if(mapa.getItem(proximaLocalizacao.getX(), proximaLocalizacao.getY()) == null)
+                setLocalizacaoAtual(proximaLocalizacao);
         }
     }
 
