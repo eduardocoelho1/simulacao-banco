@@ -44,13 +44,11 @@ public class Simulacao {
         int valor = rand.nextInt(100);
         if(valor % 10 == 0){
             Cliente novoCliente = new ClienteComum(new Localizacao(0,mapa.getAltura()-1), 0, 10, mapa);//Cria um cliente
-            novoCliente.setLocalizacaoDestino(novoCliente.getLocalizacaoAtual());
             clientes.add(novoCliente);
             mapa.adicionarItem(novoCliente);
         }
         else if (valor % 5 == 0){
             Cliente novoCliente = new ClientePreferencial(new Localizacao(mapa.getLargura()-1,mapa.getAltura()-1), 0, 10, mapa);//Cria um cliente
-            novoCliente.setLocalizacaoDestino(novoCliente.getLocalizacaoAtual());
             clientes.add(novoCliente);
             mapa.adicionarItem(novoCliente);
         }
@@ -70,15 +68,20 @@ public class Simulacao {
         int largura = mapa.getLargura();
         for (int i = 0; i < largura; i++) {
             if (i < largura/2-1 || i > largura/2) {
-                mapa.adicionarItem(new Parede(new Localizacao(i, Math.round(mapa.getAltura()*0.1f))));
-                mapa.adicionarItem(new Parede(new Localizacao(i, Math.round(mapa.getAltura()*0.9f))));
+                mapa.adicionarItem(new Parede(new Localizacao(i, mapa.getAltura()-3)));
+                mapa.adicionarItem(new Parede(new Localizacao(i, 3)));
             } else if (i == largura/2-1) {
-                mapa.setEntrada(new Localizacao(i, Math.round(mapa.getAltura()*0.9f)), TipoAtendimento.Comum);
-                mapa.setSaida(new Localizacao(i, Math.round(mapa.getAltura()*0.1f)), TipoAtendimento.Comum);
+                mapa.setEntrada(new Localizacao(i, mapa.getAltura()-3), TipoAtendimento.Comum);
+                mapa.setSaida(new Localizacao(i, 3), TipoAtendimento.Comum);
             } else {
-                mapa.setEntrada(new Localizacao(i, Math.round(mapa.getAltura()*0.9f)), TipoAtendimento.Preferencial);
-                mapa.setSaida(new Localizacao(i, Math.round(mapa.getAltura()*0.1f)), TipoAtendimento.Preferencial);
+                mapa.setEntrada(new Localizacao(i, mapa.getAltura()-3), TipoAtendimento.Preferencial);
+                mapa.setSaida(new Localizacao(i, 3), TipoAtendimento.Preferencial);
             }
+        }
+
+        for (int i = 3; i <= mapa.getAltura()-3; i++) {
+            mapa.adicionarItem(new Parede(new Localizacao(0, i)));
+            mapa.adicionarItem(new Parede(new Localizacao(mapa.getLargura()-1, i)));
         }
     }
 
@@ -90,7 +93,7 @@ public class Simulacao {
                 mapa.addCaixa(new Localizacao(x, y), TipoAtendimento.Comum);
             }
         } else {
-            System.out.println("erro ao criar caixa comum");
+            throw new TooManyATMsException("Número de caixas comuns grande demais");
         }
 
         int espacoCaixasPreferenciais = 2*numeroCaixasPreferenciais;
@@ -99,7 +102,7 @@ public class Simulacao {
                 mapa.addCaixa(new Localizacao(x, y), TipoAtendimento.Preferencial);
             }
         } else {
-            System.out.println("erro ao criar caixa preferencial");
+            throw new TooManyATMsException("Número de caixas preferenciais grande demais");
         }
     }
 
