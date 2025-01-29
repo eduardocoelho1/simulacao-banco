@@ -27,9 +27,9 @@ public class JanelaSimulacao extends JFrame{
         for(int i = 0; i < mapa.getAltura(); i++){
             for(int j = 0; j < mapa.getLargura(); j++){
                 if(mapa.getItem(i, j) != null){//Se existir algum objeto na posicao (i,j)
-                    Elemento caixa = mapa.getItem(i, j);
-                    Localizacao localizacao = caixa.getLocalizacaoAtual();
-                    visaoMapa.desenharImagem(localizacao.getX(), localizacao.getY(), caixa.getImagem());
+                    Elemento elemento = mapa.getItem(i, j);
+                    Localizacao localizacao = elemento.getLocalizacaoAtual();
+                    visaoMapa.desenharImagem(localizacao.getX(), localizacao.getY(), elemento.getImagem());
                 }
             }
         }
