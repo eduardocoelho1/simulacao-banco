@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * Representa uma localização no mapa
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
@@ -7,7 +5,6 @@ import java.util.Random;
 public class Localizacao {
     private int x;
     private int y;
-    private static Random rand = new Random();
     
     /**
      * Representa uma localização na cidade

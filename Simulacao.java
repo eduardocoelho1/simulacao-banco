@@ -30,8 +30,8 @@ public class Simulacao {
             mapa.adicionarItem(parede);
         }
 
-        cliente = new Cliente(new Localizacao(0,altura-1), 1);//Cria um cliente
-        cliente.setLocalizacaoDestino(mapa.getEntrada(TipoAtendimento.Comum));
+        cliente = new Cliente(new Localizacao(0,altura-1), 1, this);//Cria um cliente
+        cliente.setLocalizacaoDestino(cliente.getLocalizacaoAtual());
         mapa.adicionarItem(cliente);
 
         janelaSimulacao = new JanelaSimulacao(mapa);
@@ -77,5 +77,16 @@ public class Simulacao {
         }
         return paredes;
     }
-    
+
+    public Caixa getCaixaComum() {
+        return caixa[0];
+    }
+
+    public Caixa getCaixaPref() {
+        return caixa[1];
+    }
+
+    public Mapa getMapa() {
+        return mapa;
+    } 
 }
