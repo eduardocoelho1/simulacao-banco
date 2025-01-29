@@ -95,7 +95,7 @@ public class Simulacao {
 
         int espacoCaixasPreferenciais = 2*numeroCaixasPreferenciais;
         if (espacoCaixasPreferenciais <= mapa.getLargura()/2-1) {
-            for (int x = mapa.getLargura()/2+1+espacoCaixasPreferenciais; x > mapa.getLargura()/2+1; x-=2) {
+            for (int x = mapa.getLargura()/2+espacoCaixasPreferenciais-1; x > mapa.getLargura()/2; x-=2) {
                 mapa.addCaixa(new Localizacao(x, y), TipoAtendimento.Preferencial);
             }
         } else {
