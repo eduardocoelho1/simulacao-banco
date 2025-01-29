@@ -6,6 +6,10 @@ public class Mapa {
     private Elemento[][] itens;
     private int largura;
     private int altura;
+    private Localizacao entradaComum;
+    private Localizacao entradaPref;
+    private Localizacao saidaComum;
+    private Localizacao saidaPref;
     
     private static final int LARGURA_PADRAO = 35;
     private static final int ALTURA_PADRAO = 35;
@@ -51,5 +55,50 @@ public class Mapa {
     public int getAltura() {
         return altura;
     }
-    
+
+    public Localizacao getEntrada(TipoAtendimento tipo) {
+        switch (tipo) {
+            case TipoAtendimento.Comum:
+                return entradaComum;
+            case TipoAtendimento.Preferencial:
+                return entradaPref;
+            default:
+                return null;
+        }
+    }
+
+    public Localizacao getSaida(TipoAtendimento tipo) {
+        switch (tipo) {
+            case TipoAtendimento.Comum:
+                return saidaComum;
+            case TipoAtendimento.Preferencial:
+                return saidaPref;
+            default:
+                return null;
+        }
+    }
+
+    public void setEntrada(Localizacao entrada, TipoAtendimento tipo) {
+        switch (tipo) {
+            case TipoAtendimento.Comum:
+                this.entradaComum = entrada;
+                break;
+            case TipoAtendimento.Preferencial:
+                this.entradaPref = entrada;
+            default:
+                break;
+        }
+    }
+
+    public void setSaida(Localizacao saida, TipoAtendimento tipo) {
+        switch (tipo) {
+            case TipoAtendimento.Comum:
+                saidaComum = saida;
+                break;
+            case TipoAtendimento.Preferencial:
+                saidaPref = saida;
+            default:
+                break;
+        }
+    }
 }

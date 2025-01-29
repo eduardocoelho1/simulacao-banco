@@ -1,5 +1,5 @@
 public class Parede extends Elemento {
-    Parede(Localizacao localizacao, String imagem) {
+    Parede(Localizacao localizacao) {
         super(localizacao, "parede");
     }
 }

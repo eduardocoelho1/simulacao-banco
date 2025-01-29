@@ -1,6 +1,3 @@
-import java.awt.Image;
-import javax.swing.ImageIcon;
-
 /**
  * Representa os veiculos da simulacao.
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
@@ -11,7 +8,7 @@ public class Cliente extends Elemento {
     private int velAtend;
 
     public Cliente(Localizacao localizacao, int velAtend) {
-        super(localizacao, "veiculo");
+        super(localizacao, "clientecomum");
         this.velAtend = velAtend;
         atendimento = false;
     }
