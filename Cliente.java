@@ -10,21 +10,22 @@ public abstract class Cliente extends Elemento {
         dentro,
         atendendo,
         atendido,
-        saindo
+        saindo,
+        sair
     }
 
     private Localizacao localizacaoDestino;
     private Estado estado;
     private int tempoAtend;
     private int tempoGasto;
-    private Simulacao simulacao;
+    private Mapa mapa;
 
     // [tempoAtendMin, tempoAtendMax[
-    public Cliente(Localizacao localizacao, int tempoAtendMin, int tempoAtendMax, Simulacao simulacao, String imagem) {
+    public Cliente(Localizacao localizacao, int tempoAtendMin, int tempoAtendMax, Mapa mapa, String imagem) {
         super(localizacao, imagem);
         this.tempoGasto = 0;
         estado = Estado.fora;
-        this.simulacao = simulacao;
+        this.mapa = mapa;
         Random random = new Random();
         this.tempoAtend = random.nextInt(tempoAtendMax-tempoAtendMin) + tempoAtendMin;
         tempoGasto = 0;
@@ -55,7 +56,7 @@ public abstract class Cliente extends Elemento {
                 atualizarEstado();
                 break;
             case Estado.dentro:
-                localizacao = verCaixa().getLocalizacaoAtual();
+                localizacao = verMelhorCaixa();
                 x = localizacao.getX();
                 y = localizacao.getY();
                 localizacaoDestino = new Localizacao(x, y+1);
@@ -66,13 +67,17 @@ public abstract class Cliente extends Elemento {
                 tempoGasto++;
                 break;
             case Estado.atendido:
+                desviarDoCaixa();
+                atualizarEstado();
+                break;
+            case Estado.saindo:
                 localizacaoDestino = verSaida();
                 atualizarEstado();
+                break;
             default:
                 break;
         }
     }
-
     
     public void executarAcao(){
         Localizacao destino = getLocalizacaoDestino();
@@ -80,7 +85,6 @@ public abstract class Cliente extends Elemento {
             if (localizacaoDestino.equals(getLocalizacaoAtual())) {
                 proximoDestino();                    
             }
-            Mapa mapa = simulacao.getMapa();
             Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(localizacaoDestino);
             if(mapa.getItem(proximaLocalizacao.getX(), proximaLocalizacao.getY()) == null)
                 setLocalizacaoAtual(proximaLocalizacao);
@@ -101,25 +105,31 @@ public abstract class Cliente extends Elemento {
                 }
                 break;
             case Estado.atendido:
+                estado = Estado.saindo;
+                break;
+            case Estado.saindo:
                 if (getLocalizacaoAtual() == localizacaoDestino) {
-                    estado = Estado.saindo;
+                    estado = Estado.sair;
                 }
+                break;
             default:
                 break;
         }
     }
 
-    public Simulacao getSimulacao() {
-        return simulacao;
+    public Mapa getMapa() {
+        return mapa;
     }
 
     public Estado getEstado() {
         return estado;
     }
 
-    public abstract Caixa verCaixa();
+    public abstract Localizacao verMelhorCaixa();
 
     public abstract Localizacao verEntrada();
 
     public abstract Localizacao verSaida();
+
+    public abstract void desviarDoCaixa();
 }

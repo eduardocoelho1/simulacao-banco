@@ -1,20 +1,28 @@
 public class ClienteComum extends Cliente {
-    ClienteComum(Localizacao localizacao, int tempoAtendMin, int tempoAtendMax, Simulacao simulacao) {
-        super(localizacao, tempoAtendMin, tempoAtendMax, simulacao, "clientecomum");
+    ClienteComum(Localizacao localizacao, int tempoAtendMin, int tempoAtendMax, Mapa mapa) {
+        super(localizacao, tempoAtendMin, tempoAtendMax, mapa, "clientecomum");
     }
 
     @Override
-    public Caixa verCaixa() {
-        return getSimulacao().getCaixa(TipoAtendimento.Comum);
+    public Localizacao verMelhorCaixa() {
+        return getMapa().getMelhorCaixa(TipoAtendimento.Comum);
     }
 
     @Override
     public Localizacao verEntrada() {
-        return getSimulacao().getMapa().getEntrada(TipoAtendimento.Comum);
+        return getMapa().getEntrada(TipoAtendimento.Comum);
     }
 
     @Override
     public Localizacao verSaida() {
-        return getSimulacao().getMapa().getSaida(TipoAtendimento.Comum);
+        return getMapa().getSaida(TipoAtendimento.Comum);
+    }
+
+    @Override
+    public void desviarDoCaixa() {
+        Localizacao localizacao = getLocalizacaoAtual();
+        int x = localizacao.getX()+1;
+        int y = localizacao.getY()-2;
+        setLocalizacaoDestino(new Localizacao(x, y));
     }
 }
