@@ -9,13 +9,13 @@ import java.util.ArrayList;
 public class Simulacao {
     private Caixa[] caixa;
     private List<Cliente> clientes;
-    private Cliente cliente;
     private List<Parede> paredes;
     private JanelaSimulacao janelaSimulacao;
     private Mapa mapa;
     
     public Simulacao() {
         mapa = new Mapa();
+        clientes = new ArrayList<>(); 
         int largura = mapa.getLargura();
         int altura = mapa.getAltura();
         
@@ -30,9 +30,10 @@ public class Simulacao {
             mapa.adicionarItem(parede);
         }
 
-        cliente = new ClienteComum(new Localizacao(0,altura-1), 1, this);//Cria um cliente
+        Cliente cliente = new ClienteComum(new Localizacao(0,altura-1), 0, 10, this);//Cria um cliente
         cliente.setLocalizacaoDestino(cliente.getLocalizacaoAtual());
         mapa.adicionarItem(cliente);
+        clientes.add(cliente);
 
         janelaSimulacao = new JanelaSimulacao(mapa);
     }
@@ -41,17 +42,34 @@ public class Simulacao {
         janelaSimulacao.executarAcao();
         for (int i = 0; i < numPassos; i++) {
             executarUmPasso();
-            esperar(100);
+            esperar(200);
         }        
     }
 
     private void executarUmPasso() {
-        mapa.removerItem(cliente);
-        cliente.executarAcao();
-        mapa.adicionarItem(cliente);
+        for (Cliente cliente : clientes) {
+            mapa.removerItem(cliente);
+            cliente.executarAcao();
+            mapa.adicionarItem(cliente);
+        }
+        Random rand = new Random();
+        int valor = rand.nextInt(100);
+        if(valor % 10 == 0){
+            Cliente novoCliente = new ClienteComum(new Localizacao(0,mapa.getAltura()-1), 0, 10, this);//Cria um cliente
+            novoCliente.setLocalizacaoDestino(novoCliente.getLocalizacaoAtual());
+            clientes.add(novoCliente);
+            mapa.adicionarItem(novoCliente);
+        }
+        else if (valor % 5 == 0){
+            Cliente novoCliente = new ClientePreferencial(new Localizacao(mapa.getLargura()-1,mapa.getAltura()-1), 0, 10, this);//Cria um cliente
+            novoCliente.setLocalizacaoDestino(novoCliente.getLocalizacaoAtual());
+            clientes.add(novoCliente);
+            mapa.adicionarItem(novoCliente);
+        }
         janelaSimulacao.executarAcao();
     }
-    
+
+
     private void esperar(int milisegundos){
         try{
             Thread.sleep(milisegundos);
