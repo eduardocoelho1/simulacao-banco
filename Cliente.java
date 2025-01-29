@@ -23,6 +23,7 @@ public abstract class Cliente extends Elemento {
     // [tempoAtendMin, tempoAtendMax[
     public Cliente(Localizacao localizacao, int tempoAtendMin, int tempoAtendMax, Mapa mapa, String imagem) {
         super(localizacao, imagem);
+        localizacaoDestino = localizacao;
         this.tempoGasto = 0;
         estado = Estado.fora;
         this.mapa = mapa;
