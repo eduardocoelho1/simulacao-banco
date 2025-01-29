@@ -2,7 +2,7 @@
  * Representa os veiculos da simulacao.
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
-public class Cliente extends Elemento {
+public abstract class Cliente extends Elemento {
     private enum Estado {
         fora,
         dentro,
@@ -14,8 +14,8 @@ public class Cliente extends Elemento {
     private int velAtend;
     private Simulacao simulacao;
 
-    public Cliente(Localizacao localizacao, int velAtend, Simulacao simulacao) {
-        super(localizacao, "clientecomum");
+    public Cliente(Localizacao localizacao, int velAtend, Simulacao simulacao, String imagem) {
+        super(localizacao, imagem);
         this.velAtend = velAtend;
         estado = Estado.fora;
         this.simulacao = simulacao;
@@ -39,23 +39,23 @@ public class Cliente extends Elemento {
         int y;
         switch (estado) {
             case Estado.fora:
-                localizacao = simulacao.getMapa().getEntrada(TipoAtendimento.Comum);
+                localizacao = verEntrada();
                 x = localizacao.getX();
                 y = localizacao.getY();
                 localizacaoDestino = new Localizacao(x, y-1);
                 trocarEstado();
                 break;
             case Estado.dentro:
-                localizacao = simulacao.getCaixaComum().getLocalizacaoAtual();
+                localizacao = verCaixa().getLocalizacaoAtual();
                 x = localizacao.getX();
                 y = localizacao.getY();
                 localizacaoDestino = new Localizacao(x, y+1);
                 trocarEstado();
                 break;
             case Estado.atendido:
-            localizacao = simulacao.getMapa().getSaida(TipoAtendimento.Comum);
-            localizacaoDestino = localizacao;
-            break;
+                localizacao = verSaida();
+                localizacaoDestino = localizacao;
+                break;
             default:
                 break;
         }
@@ -84,4 +84,14 @@ public class Cliente extends Elemento {
                 break;
         }
     }
+
+    public Simulacao getSimulacao() {
+        return simulacao;
+    }
+
+    public abstract Caixa verCaixa();
+
+    public abstract Localizacao verEntrada();
+
+    public abstract Localizacao verSaida();
 }
