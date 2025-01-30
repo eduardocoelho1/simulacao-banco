@@ -115,22 +115,11 @@ public class Simulacao {
      */
     private void criarCaixas(int numeroCaixasComuns, int numeroCaixasPreferenciais) {
         int y = mapa.getAltura()/4;
-        int espacoCaixasComuns = 2*numeroCaixasComuns;
-        if (espacoCaixasComuns <= mapa.getLargura()/2-1) {
-            for (int x = mapa.getLargura()/2-espacoCaixasComuns; x < mapa.getLargura()/2-1; x+=2) {
-                mapa.addCaixa(new Localizacao(x, y), TipoAtendimento.Comum);
-            }
-        } else {
-            throw new TooManyATMsException("Número de caixas comuns grande demais");
+        for (int x = mapa.getLargura()/2-2*numeroCaixasComuns; x < mapa.getLargura()/2-1; x+=2) {
+            mapa.addCaixa(new Localizacao(x, y), TipoAtendimento.Comum);
         }
-
-        int espacoCaixasPreferenciais = 2*numeroCaixasPreferenciais;
-        if (espacoCaixasPreferenciais <= mapa.getLargura()/2-1) {
-            for (int x = mapa.getLargura()/2+espacoCaixasPreferenciais-1; x > mapa.getLargura()/2; x-=2) {
-                mapa.addCaixa(new Localizacao(x, y), TipoAtendimento.Preferencial);
-            }
-        } else {
-            throw new TooManyATMsException("Número de caixas preferenciais grande demais");
+        for (int x = mapa.getLargura()/2+2*numeroCaixasPreferenciais-1; x > mapa.getLargura()/2; x-=2) {
+            mapa.addCaixa(new Localizacao(x, y), TipoAtendimento.Preferencial);
         }
     }
 
