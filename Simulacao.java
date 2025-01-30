@@ -10,11 +10,25 @@ public class Simulacao {
     private List<Cliente> clientes;
     private JanelaSimulacao janelaSimulacao;
     private Mapa mapa;
+    private int geracaoClientesComuns;
+    private int geracaoClientesPreferenciais;
+    private int tempoAtendMinClienteComum;
+    private int tempoAtendMaxClienteComum;
+    private int tempoAtendMinClientePreferencial;
+    private int tempoAtendMaxClientePreferencial;
     
-    public Simulacao() {
+    public Simulacao(int geracaoClientesComuns, int geracaoClientesPreferenciais,
+    int tempoAtendMinClienteComum, int tempoAtendMaxClienteComum, int tempoAtendMinClientePreferencial,
+    int tempoAtendMaxClientePreferencial, int numeroCaixasComuns, int numeroCaixasPreferenciais) {
+        this.geracaoClientesComuns = geracaoClientesComuns;
+        this.geracaoClientesPreferenciais = geracaoClientesPreferenciais;
+        this.tempoAtendMinClienteComum = tempoAtendMinClienteComum;
+        this.tempoAtendMaxClienteComum = tempoAtendMaxClienteComum;
+        this.tempoAtendMinClientePreferencial = tempoAtendMinClientePreferencial;
+        this.tempoAtendMaxClientePreferencial = tempoAtendMaxClientePreferencial;
         mapa = new Mapa();
         clientes = new ArrayList<>(); 
-        criarCaixas(5,4);        
+        criarCaixas(numeroCaixasComuns,numeroCaixasPreferenciais);        
         criarParedes();
         janelaSimulacao = new JanelaSimulacao(mapa);
     }
@@ -48,13 +62,13 @@ public class Simulacao {
         }
         Random rand = new Random();
         int valor = rand.nextInt(100);
-        if(valor % 10 == 0){
-            Cliente novoCliente = new ClienteComum(new Localizacao(0,mapa.getAltura()-1), 0, 10, mapa);//Cria um cliente
+        if(valor % geracaoClientesComuns == 0){
+            Cliente novoCliente = new ClienteComum(new Localizacao(0,mapa.getAltura()-1), tempoAtendMinClienteComum, tempoAtendMaxClienteComum, mapa);//Cria um cliente
             clientes.add(novoCliente);
             mapa.adicionarItem(novoCliente);
         }
-        else if (valor % 5 == 0){
-            Cliente novoCliente = new ClientePreferencial(new Localizacao(mapa.getLargura()-1,mapa.getAltura()-1), 0, 10, mapa);//Cria um cliente
+        if(valor % geracaoClientesPreferenciais == 0){
+            Cliente novoCliente = new ClientePreferencial(new Localizacao(mapa.getLargura()-1,mapa.getAltura()-1), tempoAtendMinClientePreferencial, tempoAtendMaxClientePreferencial, mapa);//Cria um cliente
             clientes.add(novoCliente);
             mapa.adicionarItem(novoCliente);
         }
