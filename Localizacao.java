@@ -7,7 +7,7 @@ public class Localizacao {
     private int y;
     
     /**
-     * Representa uma localização na cidade
+     * Representa uma localização no mapa.
      * @param x Coordenada x: deve ser maior ou igual a 0.
      * @param y Coordenada y: deve ser maior ou igual a 0.
      */
@@ -25,9 +25,9 @@ public class Localizacao {
     }
     
     /**
-     * Gera a localizacao para se mover visando alcançar o destino
+     * Gera a localizacao para se mover visando alcançar o destino.
      * @param localizacaoDestino: localizacao que se deseja alcancar.
-     * @return Localizacao para onde se deve ir
+     * @return Localização para onde se deve ir.
      */
     public Localizacao proximaLocalizacao(Localizacao localizacaoDestino){
         if(localizacaoDestino.equals(this)){//Verifica se já alcancou o destino
@@ -61,7 +61,7 @@ public class Localizacao {
     }
     
     /**
-     * @return A representacao da localizacao.
+     * @return A representacao da localização.
      */
     @Override
     public String toString()

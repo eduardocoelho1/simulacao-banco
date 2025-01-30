@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Responsavel pela simulacao.
- * @author David J. Barnes and Michael Kolling and Luiz Merschmann
+ * Responsável pela simulação.
  */
 public class Simulacao {
     private List<Cliente> clientes;
@@ -16,10 +15,14 @@ public class Simulacao {
         mapa = new Mapa();
         clientes = new ArrayList<>(); 
         criarCaixas(5,4);        
-        criarParedes();// cria paredes, entradas e saidas
+        criarParedes();
         janelaSimulacao = new JanelaSimulacao(mapa);
     }
     
+    /**
+     * Inicia a simulação.
+     * @param numPassos: número de passos da simulação.
+     */
     public void executarSimulacao(int numPassos){
         janelaSimulacao.executarAcao();
         for (int i = 0; i < numPassos; i++) {
@@ -28,6 +31,9 @@ public class Simulacao {
         }        
     }
 
+    /**
+     * Executa um passo da simulação.
+     */
     private void executarUmPasso() {
         Iterator<Cliente> it = clientes.iterator();
         while (it.hasNext()) {
@@ -64,6 +70,9 @@ public class Simulacao {
         }
     }
 
+    /**
+     * Adiciona paredes, entrada e saída no mapa.
+     */
     private void criarParedes() {
         int largura = mapa.getLargura();
         for (int i = 0; i < largura; i++) {
@@ -85,6 +94,11 @@ public class Simulacao {
         }
     }
 
+    /**
+     * Adiciona os caixas no mapa.
+     * @param numeroCaixasComuns: quantidade de caixas comuns.
+     * @param numeroCaixasPreferenciais: quantidade de caixas preferenciais.
+     */
     private void criarCaixas(int numeroCaixasComuns, int numeroCaixasPreferenciais) {
         int y = mapa.getAltura()/4;
         int espacoCaixasComuns = 2*numeroCaixasComuns;

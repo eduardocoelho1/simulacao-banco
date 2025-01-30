@@ -1,10 +1,12 @@
 import java.util.Random;
 
 /**
- * Representa os veiculos da simulacao.
- * @author David J. Barnes and Michael Kolling and Luiz Merschmann
+ * Representa os clientes da simulação.
  */
 public abstract class Cliente extends Elemento {
+    /**
+     * Representa os estados possíveis para o cliente.
+     */
     public enum Estado {
         fora,
         dentro,
@@ -20,7 +22,13 @@ public abstract class Cliente extends Elemento {
     private int tempoGasto;
     private Mapa mapa;
 
-    // [tempoAtendMin, tempoAtendMax[
+    /**
+     * @param localizacao: localização onde o cliente será criado.
+     * @param tempoAtendMin: tempo mínimo de atendimento.
+     * @param tempoAtendMax: tempo máximo de atendimeno.
+     * @param mapa: mapa da simulação.
+     * @param imagem: nome de um arquivo de imagem png (sem a extensão).
+     */
     public Cliente(Localizacao localizacao, int tempoAtendMin, int tempoAtendMax, Mapa mapa, String imagem) {
         super(localizacao, imagem);
         localizacaoDestino = localizacao;
@@ -44,6 +52,9 @@ public abstract class Cliente extends Elemento {
         this.localizacaoDestino = localizacaoDestino;
     }
 
+    /**
+     * Encontra o próximo destino com base no estado.
+     */
     public void proximoDestino() {
         Localizacao localizacao;
         int x;
@@ -80,6 +91,9 @@ public abstract class Cliente extends Elemento {
         }
     }
     
+    /**
+     * Faz o cliente executar uma ação.
+     */
     public void executarAcao(){
         Localizacao destino = getLocalizacaoDestino();
         if(destino != null){
@@ -92,6 +106,9 @@ public abstract class Cliente extends Elemento {
         }
     }
 
+    /**
+     * Realiza transições de estado.
+     */
     private void atualizarEstado() {
         switch (estado) {
             case Estado.fora:
@@ -118,19 +135,40 @@ public abstract class Cliente extends Elemento {
         }
     }
 
+    /**
+     * @return mapa da simulação.
+     */
     public Mapa getMapa() {
         return mapa;
     }
 
+    /**
+     * @return estado atual do cliente.
+     */
     public Estado getEstado() {
         return estado;
     }
 
+    /**
+     * Descobre o caixa com menos pessoas na fila.
+     * @return a localização do melhor caixa com prioridade para os mais próximos da parede lateral.
+     */
     public abstract Localizacao verMelhorCaixa();
 
+    /**
+     * Descobre a entrada.
+     * @return a localização da entrada.
+     */
     public abstract Localizacao verEntrada();
 
+    /**
+     * Descobre a saída.
+     * @return a localização da saída.
+     */
     public abstract Localizacao verSaida();
 
+    /**
+     * Cliente sai do caixa pela lateral.
+     */
     public abstract void desviarDoCaixa();
 }

@@ -1,4 +1,13 @@
+/**
+ * Representa os clientes preferenciais da simulação.
+ */
 public class ClientePreferencial extends Cliente {
+    /**
+     * @param localizacao: localização onde o cliente será criado.
+     * @param tempoAtendMin: tempo mínimo de atendimento.
+     * @param tempoAtendMax: tempo máximo de atendimeno.
+     * @param mapa: mapa da simulação.
+     */
     ClientePreferencial(Localizacao localizacao, int tempoAtendMin, int tempoAtendMax, Mapa mapa) {
         super(localizacao, tempoAtendMin, tempoAtendMax, mapa, "clientepreferencial");
     }

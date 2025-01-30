@@ -1,8 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 /**
- * Representa um mapa com todos os itens que participam da simulacao
- * @author David J. Barnes and Michael Kolling and Luiz Merschmann
+ * Representa um mapa com todos os itens que participam da simulação
  */
 public class Mapa {
     private Elemento[][] itens;
@@ -19,8 +18,8 @@ public class Mapa {
     private static final int ALTURA_PADRAO = 35;
     
     /**
-     * Cria mapa para alocar itens da simulacao.
-     * @param largura: largura da área de simulacao.
+     * Cria mapa para alocar itens da simulação.
+     * @param largura: largura da área de simulação.
      * @param altura: altura da área de simulação.
      */
     public Mapa(int largura, int altura) {
@@ -62,6 +61,11 @@ public class Mapa {
         return altura;
     }
 
+    /**
+     * Retorna a entrada com base no tipo de atendimento.
+     * @param tipo: tipo de cliente para qual a entrada foi designada.
+     * @return localização da entrada.
+     */
     public Localizacao getEntrada(TipoAtendimento tipo) {
         switch (tipo) {
             case TipoAtendimento.Comum:
@@ -73,6 +77,11 @@ public class Mapa {
         }
     }
 
+    /**
+     * Retorna a saída com base no tipo de atendimento.
+     * @param tipo: tipo de atendimento para qual a saída foi designada.
+     * @return localização da saída.
+     */
     public Localizacao getSaida(TipoAtendimento tipo) {
         switch (tipo) {
             case TipoAtendimento.Comum:
@@ -84,6 +93,11 @@ public class Mapa {
         }
     }
 
+    /**
+     * Configura a localização da entrada com base no tipo de atendimento.
+     * @param entrada: localização para a entrada.
+     * @param tipo: tipo de atendimento para qual a entrada será designada.
+     */
     public void setEntrada(Localizacao entrada, TipoAtendimento tipo) {
         switch (tipo) {
             case TipoAtendimento.Comum:
@@ -96,6 +110,11 @@ public class Mapa {
         }
     }
 
+    /**
+     * Configura a localização da saída com base no tipo de atendimento.
+     * @param saida: localização para a saída.
+     * @param tipo: tipo de atendimento para qual a saída será designada.
+     */
     public void setSaida(Localizacao saida, TipoAtendimento tipo) {
         switch (tipo) {
             case TipoAtendimento.Comum:
@@ -108,6 +127,11 @@ public class Mapa {
         }
     }
 
+    /**
+     * Adiciona um caixa com base no tipo de atendimento.
+     * @param localizacao: localização para o caixa.
+     * @param tipo: tipo de atendimento.
+     */
     public void addCaixa(Localizacao localizacao, TipoAtendimento tipo) {
         switch (tipo) {
             case TipoAtendimento.Comum:
@@ -123,17 +147,11 @@ public class Mapa {
         adicionarItem(new Caixa(localizacao));
     }
 
-    public List<Localizacao> getCaixas(TipoAtendimento tipo) {
-        switch (tipo) {
-            case TipoAtendimento.Comum:
-                return caixasComuns;
-            case TipoAtendimento.Preferencial:
-                return caixasPreferenciais;
-            default:
-                return null;
-        }
-    }
-
+    /** 
+     * Retorna o caixa com menos pessoas na fila.
+     * @param tipo: tipo de atendimento.
+     * @return localização do melhor caixa com prioridade para os mais próximos da parede lateral.
+     */
     public Localizacao getMelhorCaixa(TipoAtendimento tipo) {
         List<Localizacao> caixas;
         switch (tipo) {
